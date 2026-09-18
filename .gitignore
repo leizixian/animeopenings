@@ -14,3 +14,7 @@ names.php
 eggs.php
 backend/includes/botnet.html
 *.webm
+
+# Third-party icon library vendored locally by .cursor/dev-setup.sh #
+##################################################################
+font-awesome-4.4.0/

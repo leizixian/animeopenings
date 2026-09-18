@@ -56,4 +56,24 @@ else
   echo "ffmpeg not found; skipping sample video generation" >&2
 fi
 
+# Font Awesome 4.4.0: a third-party icon library the site loads from
+# `font-awesome-4.4.0/`. It is not part of this repository, so vendor it
+# locally (best-effort) for correct control-button icons. Failure here is
+# non-fatal: the site works without icons.
+FA_DIR="font-awesome-4.4.0"
+FA_BASE="https://cdn.jsdelivr.net/npm/font-awesome@4.4.0"
+if [ ! -f "$FA_DIR/css/font-awesome.min.css" ]; then
+  mkdir -p "$FA_DIR/css" "$FA_DIR/fonts"
+  if curl -fsSL --max-time 30 -o "$FA_DIR/css/font-awesome.min.css" "$FA_BASE/css/font-awesome.min.css"; then
+    for f in fontawesome-webfont.woff2 fontawesome-webfont.woff fontawesome-webfont.ttf \
+             fontawesome-webfont.eot fontawesome-webfont.svg FontAwesome.otf; do
+      curl -fsSL --max-time 30 -o "$FA_DIR/fonts/$f" "$FA_BASE/fonts/$f" || true
+    done
+    echo "vendored Font Awesome 4.4.0 into $FA_DIR"
+  else
+    echo "could not download Font Awesome (offline?); site icons will be missing" >&2
+    rm -rf "$FA_DIR"
+  fi
+fi
+
 echo "Local development setup complete."
