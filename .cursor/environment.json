@@ -1,0 +1,21 @@
+{
+  "name": "animeopenings",
+  "user": "ubuntu",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "install": "bash .cursor/dev-setup.sh",
+  "terminals": [
+    {
+      "name": "php-server",
+      "command": "php -S 0.0.0.0:8000 -t ."
+    }
+  ],
+  "ports": [
+    {
+      "name": "web",
+      "port": 8000
+    }
+  ]
+}
